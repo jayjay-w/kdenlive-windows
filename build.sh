@@ -1,6 +1,6 @@
 #script to compile kdenlive on windows
 #Step 1: Checkout mxe from github, if not already done
-if [ ! -d "mxe"]
+if [ ! -d "mxe" ]; then
 	mkdir  ./mxe
 	cd ./mxe
 	git clone https://github.com/mxe/mxe.git
