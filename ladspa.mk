@@ -1,41 +1,31 @@
-PKG             := ladspa
+# This file is part of MXE.
+# See index.html for further information.
+
+PKG             := ladspa-sdk
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 3.3.4
-#$(PKG)_CHECKSUM := 8f0cde90929bc05587c3368d2f15cd0530a60b8a9912a8e2979a72dbe5af0982
-$(PKG)_SUBDIR   := fftw-$($(PKG)_VERSION)
-$(PKG)_FILE     := fftw-$($(PKG)_VERSION).tar.gz
-$(PKG)_URL      := http://www.fftw.org/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc
+$(PKG)_VERSION  := 1.13
+$(PKG)_CHECKSUM := b5ed3f4f253a0f6c1b7a1f4b8cf62376ca9f51d999650dd822650c43852d306b
+$(PKG)_SUBDIR   := ladspa_sdk/src
+$(PKG)_FILE     := ladspa-sdk_$($(PKG)_VERSION).orig.tar.gz
+$(PKG)_HOME     := http://http.debian.net/debian/pool/main/l/ladspa-sdk
+$(PKG)_URL      := $($(PKG)_HOME)/$($(PKG)_FILE)
+$(PKG)_DEPS     := gcc dlfcn-win32
 
 define $(PKG)_UPDATE
-    $(WGET) -q -O- 'http://www.fftw.org/download.html' | \
-    $(SED) -n 's,.*fftw-\([0-9][^>]*\)\.tar.*,\1,p' | \
-    grep -v alpha | \
-    grep -v beta | \
+    $(WGET) -q -O- $($(PKG)_HOME) | \
+    $(SED) -n 's,.*$(PKG)_\([0-9][^>]*\)\.orig\.tar.*,\1,p' | \
     head -1
 endef
 
 define $(PKG)_BUILD
-    cd '$(1)' && ./configure \
-        $(MXE_CONFIGURE_OPTS) \
-        --enable-threads \
-        --with-combined-threads
-    $(MAKE) -C '$(1)' -j '$(JOBS)' bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
-    $(MAKE) -C '$(1)' -j 1 install bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
-
-    cd '$(1)' && ./configure \
-        $(MXE_CONFIGURE_OPTS) \
-        --enable-threads \
-        --with-combined-threads \
-        --enable-long-double
-    $(MAKE) -C '$(1)' -j '$(JOBS)' bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
-    $(MAKE) -C '$(1)' -j 1 install bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
-
-    cd '$(1)' && ./configure \
-        $(MXE_CONFIGURE_OPTS) \
-        --enable-threads \
-        --with-combined-threads \
-        --enable-float
-    $(MAKE) -C '$(1)' -j '$(JOBS)' bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
-    $(MAKE) -C '$(1)' -j 1 install bin_PROGRAMS= sbin_PROGRAMS= noinst_PROGRAMS=
+	mkdir -p $(1)/../plugins $(1)/../bin
+    $(MAKE) targets PROGRAMS='' \
+		-C '$(1)' -j '$(JOBS)' \
+		CC='$(TARGET)-gcc -L$(PREFIX)/usr/$(TARGET)/lib' \
+		LD='$(TARGET)-gcc -L$(PREFIX)/usr/$(TARGET)/lib' \
+		CPP='$(TARGET)-g++ -L$(PREFIX)/usr/$(TARGET)/lib' \
+		CFLAGS='-I. -O3'
+	cp $(1)/ladspa.h $(PREFIX)/usr/$(TARGET)/include/
+	mkdirhier $(PREFIX)/usr/$(TARGET)/lib/ladspa/
+	cp $(1)/../plugins/* $(PREFIX)/usr/$(TARGET)/lib/ladspa/
 endef
