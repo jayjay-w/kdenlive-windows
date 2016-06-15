@@ -10,6 +10,9 @@ else
     echo "MXE folder already exists. Pulling latest changes."
     cd ./mxe/mxe
     git pull
+    #Apply our patch to index.html
+    echo "Patching index.html"
+    git am ../../*.patch
     cd ../../
 fi
 #Copy out makefiles to mxe
