@@ -9,7 +9,7 @@ $(PKG)_SUBDIR   := ladspa_sdk/src
 $(PKG)_FILE     := ladspa-sdk_$($(PKG)_VERSION).orig.tar.gz
 $(PKG)_HOME     := http://http.debian.net/debian/pool/main/l/ladspa-sdk
 $(PKG)_URL      := $($(PKG)_HOME)/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc dlfcn-win32
+$(PKG)_DEPS     := gcc 
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- $($(PKG)_HOME) | \
@@ -25,7 +25,8 @@ define $(PKG)_BUILD
 		LD='$(TARGET)-gcc -L$(PREFIX)/usr/$(TARGET)/lib' \
 		CPP='$(TARGET)-g++ -L$(PREFIX)/usr/$(TARGET)/lib' \
 		CFLAGS='-I. -O3'
-	cp $(1)/ladspa.h $(PREFIX)/usr/$(TARGET)/include/
-	mkdirhier $(PREFIX)/usr/$(TARGET)/lib/ladspa/
+	#mkdir -p $(PREFIX)/usr/$(TARGET)/include/
+	cp $(1)/ladspa.h $(PREFIX)/$(TARGET)/include/
+	mkdir -p $(PREFIX)/usr/$(TARGET)/lib/ladspa/
 	cp $(1)/../plugins/* $(PREFIX)/usr/$(TARGET)/lib/ladspa/
 endef
