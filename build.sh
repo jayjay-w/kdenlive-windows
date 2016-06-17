@@ -6,7 +6,6 @@
 SOURCE_DIR=.
 BUILD_DIR=~/src/kdenlinve-win
 MXE_DIR=~/src/mxe
-mkdir $BUILD_DIR
 cp $SOURCE_DIR/*mk $MXE_DIR -f
 cp $SOURCE_DIR/*patch $MXE_DIR -f
 #Step 1: Checkout mxe from github, if not already done
@@ -27,58 +26,73 @@ cd $MXE_DIR
 echo "Compiling MLT and its dependencies using MXE"
 make qt5 nsis mlt
 #Step 6: clone and compile kde frameworks
-echo "Compiling KDE frameworks - KConfig"
-#KConfig
-git clone git://anongit.kde.org/kconfig.git $BUILD_DIR/kconfig
-#Pull to make sure we have latest sources
-cd $BUILD_DIR/kconfig
-git pull
-mkdir $BUILD_DIR/kconfig-build
-cd $BUILD_DIR/kconfig-build
-cmake $BUILD_DIR/kconfig \
+
+function buildFramework {
+echo "Compiling KDE frameworks - $1"
+#check if folder already exists and pull, if not, clone
+if [ ! -d "$BUILD_DIR/$1" ]; then
+    echo "Cloning $1"
+    git clone git://anongit.kde.org/$1.git $BUILD_DIR/$1
+else
+    echo "Pulling $1"
+    cd $BUILD_DIR/$1
+    git pull
+fi
+mkdir -p $BUILD_DIR/$1_win
+cd $BUILD_DIR/$1_win
+cmake ../$1 \
     -DCMAKE_TOOLCHAIN_FILE=~/src/mxe/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/usr \
-    -DLIB_INSTALL_DIR=$BUILD_DIR/lib \
-    -DLIBEXEC_INSTALL_DIR=$BUILD_DIR/lib \
+    -DCMAKE_INSTALL_PREFIX=../usr \
+    -DLIB_INSTALL_DIR=../lib \
+    -DLIBEXEC_INSTALL_DIR=../lib \
     -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
     -DBUILD_TESTING=OFF
-make
-make INSTALL_ROOT=$BUILD_DIR/lib install
-
-echo "Compiling KDE frameworks - KArchive"
-#KArchive
-git clone git://anongit.kde.org/karchive.git $BUILD_DIR/karchive
-#Pull to make sure we have latest sources
-cd $BUILD_DIR/karchive
-git pull
-mkdir $BUILD_DIR/karchive_build
-cd $BUILD_DIR/karchive_build
-cmake $BUILD_DIR/karchive \
+    
+    cmake ../$1 \
     -DCMAKE_TOOLCHAIN_FILE=~/src/mxe/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/usr \
-    -DLIB_INSTALL_DIR=$BUILD_DIR/lib \
+    -DCMAKE_INSTALL_PREFIX=../usr \
+    -DLIB_INSTALL_DIR=../lib \
+    -DLIBEXEC_INSTALL_DIR=../lib \
     -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
     -DBUILD_TESTING=OFF
-make
-make INSTALL_ROOT=$BUILD_DIR/lib install
 
-echo "Compiling KDE frameworks - KIO"
-#KIO
-git clone git://anongit.kde.org/kio.git $BUILD_DIR/kio
-#Pull to make sure we have latest sources
-cd $BUILD_DIR/kio
-git pull
-mkdir $BUILD_DIR/io_build
-cd $BUILD_DIR/karchive_build
-cmake $BUILD_DIR/kio \
+    cmake ../$1 \
     -DCMAKE_TOOLCHAIN_FILE=~/src/mxe/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/usr \
-    -DLIB_INSTALL_DIR=$BUILD_DIR/lib \
+    -DCMAKE_INSTALL_PREFIX=../usr \
+    -DLIB_INSTALL_DIR=../lib \
+    -DLIBEXEC_INSTALL_DIR=../lib \
     -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
     -DBUILD_TESTING=OFF
-make
-make INSTALL_ROOT=$BUILD_DIR/lib install
+    
+    cmake ../$1 \
+    -DCMAKE_TOOLCHAIN_FILE=~/src/mxe/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=../usr \
+    -DLIB_INSTALL_DIR=../lib \
+    -DLIBEXEC_INSTALL_DIR=../lib \
+    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+    -DBUILD_TESTING=OFF
 
+
+make
+make INSTALL_ROOT=../lib install
+
+}
+
+buildFramework kcoreaddons
+buildframework kguiaddons
+buildFramework kwidgetsaddons
+buildFramework kdbusaddons
+buildframework kxmlgui
+buildFramework karchive
+buildFramework ktextwidgets
+buildFramework kiconthemes
+buildFramework knotifications
+buildframework knotifyconfig
+buildFramework kio
+buildFramework kcrash
+buildFramework kconfig
+buildframework knewstuff
