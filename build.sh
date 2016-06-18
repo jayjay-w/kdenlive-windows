@@ -16,7 +16,7 @@ if [ ! -d "$MXE_DIR" ]; then
 else
     echo "MXE folder already exists. Pulling latest changes."
     cd $MXE_DIR
-    git pull
+    #git pull #we can enable pulling later, right not it causes many packages to rebuild if they have been changed upstream
     #Apply our patch to index.html
     echo "Patching index.html"
     git am *.patch
@@ -50,33 +50,6 @@ cmake $BUILD_DIR/$1 \
     -DLIB_INSTALL_DIR=$BUILD_DIR/lib \
     -DLIBEXEC_INSTALL_DIR=$BUILD_DIR/lib \
     -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
-    -DBUILD_TESTING=OFF
-    
-    cmake $BUILD_DIR/$1 \
-    -DCMAKE_TOOLCHAIN_FILE=~/src/mxe/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/usr \
-    -DLIB_INSTALL_DIR=$BUILD_DIR/lib \
-    -DLIBEXEC_INSTALL_DIR=$BUILD_DIR/lib \
-    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
-    -DBUILD_TESTING=OFF
-
-    cmake $BUILD_DIR/$1 \
-    -DCMAKE_TOOLCHAIN_FILE=~/src/mxe/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/usr \
-    -DLIB_INSTALL_DIR=$BUILD_DIR/lib \
-    -DLIBEXEC_INSTALL_DIR=$BUILD_DIR/lib \
-    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
-    -DBUILD_TESTING=OFF
-    
-    cmake $BUILD_DIR/$1 \
-    -DCMAKE_TOOLCHAIN_FILE=~/src/mxe/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/usr \
-    -DLIB_INSTALL_DIR=$BUILD_DIR/lib \
-    -DLIBEXEC_INSTALL_DIR=$BUILD_DIR/lib \
-    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
     -DKF5Archive_DIR=$BUILD_DIR/lib/cmake/KF5Archive \
     -DKF5Config_DIR=$BUILD_DIR/lib/cmake/KF5Config \
     -DKF5CoreAddons_DIR=$BUILD_DIR/lib/cmake/KF5CoreAddons \
@@ -98,15 +71,15 @@ buildFramework kconfig
 buildFramework kcoreaddons
 buildFramework kdbusaddons
 buildFramework ki18n
+buildFramework kwidgetsaddons
 buildFramework kwindowsystem
 buildFramework kcrash
 buildFramework kservice
 buildFramework kio
 buildframework kguiaddons
-buildFramework kwidgetsaddons
 buildframework kxmlgui
 buildFramework ktextwidgets
 buildFramework kiconthemes
 buildFramework knotifications
-buildframework knotifyconfig
-buildframework knewstuff
+buildFramework knotifyconfig
+buildFramework knewstuff
