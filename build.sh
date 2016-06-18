@@ -24,62 +24,72 @@ fi
 cd $MXE_DIR
 #Step 2: compile the needed MLT framework
 echo "Compiling MLT and its dependencies using MXE"
-make qt5 nsis mlt
+make libxml2 libxslt qt5 qtwinextras nsis mlt
 #Step 6: clone and compile kde frameworks
 
+#Build sonnet
+# echo "Building sonnet"
+# git clone git://anongit.kde.org/sonnet.git $BUILD_DIR/sonnet
+# cd $BUILD_DIR/sonnet
+# sed -i 's,$<TARGET_FILE:KF5::parsetrigrams>,/usr/bin/parsetrigrams,' data/CMakeLists.txt
+# mkdir $BUILD_DIR/sonnet_win
+# cd $BUILD_DIR/sonnet_win
+# cmake ../sonnet \
+#     -DCMAKE_TOOLCHAIN_FILE=~/src/mxe/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake \
+#     -DCMAKE_BUILD_TYPE=Release \
+#     -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+#     -DBUILD_TESTING=OFF
+#make
+#make install
+
 function buildFramework {
-cd $BUILD_DIR
-echo "Compiling KDE framework ($1)"
-#check if folder already exists and pull, if not, clone
-if [ ! -d "$1" ]; then
-    echo "Cloning $1"
-    git clone git://anongit.kde.org/$1.git $1
-else
-    echo "Pulling $1"
-    cd $1
-    git pull
-fi
+    cd $BUILD_DIR
+    echo "Compiling KDE framework ($1)"
+    #check if folder already exists and pull, if not, clone
+    FRAMEWORK_GIT_URL=git://anongit.kde.org/$1.git
+    if [ ! -d "$1" ]; then
+        echo "Cloning $1 from $FRAMEWORK_GIT_URL"
+        git clone $FRAMEWORK_GIT_URL $BUILD_DIR/frameworks/$1
+    else
+        echo "Pulling $1 from $FRAMEWORK_GIT_URL"
+        cd $BUILD_DIR/frameworks/$1
+        git pull
+    fi
 
-cd $BUILD_DIR
-mkdir -p $1_win
-cd $1_win
-cmake $BUILD_DIR/$1 \
-    -DCMAKE_TOOLCHAIN_FILE=~/src/mxe/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=$BUILD_DIR/usr \
-    -DLIB_INSTALL_DIR=$BUILD_DIR/lib \
-    -DLIBEXEC_INSTALL_DIR=$BUILD_DIR/lib \
-    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
-    -DKF5Archive_DIR=$BUILD_DIR/lib/cmake/KF5Archive \
-    -DKF5Config_DIR=$BUILD_DIR/lib/cmake/KF5Config \
-    -DKF5CoreAddons_DIR=$BUILD_DIR/lib/cmake/KF5CoreAddons \
-    -DKF5DBusAddons_DIR=$BUILD_DIR/lib/cmake/KF5DBusAddons \
-    -DKF5I18n_DIR=$BUILD_DIR/lib/cmake/KF5I18n \
-    -DKF5Service_DIR=$BUILD_DIR/lib/cmake/KF5Service \
-    -DKF5Crash_DIR=$BUILD_DIR/lib/cmake/KF5Crash \
-    -DKF5WindowSystem_DIR=$BUILD_DIR/lib/cmake/KF5WindowSystem \
-    -DBUILD_TESTING=OFF
-
-
-make
-make INSTALL_ROOT=$BUILD_DIR/lib install
-sudo make install
+    mkdir -p $BUILD_DIR/frameworks/$1_win
+    cd $BUILD_DIR/frameworks/$1_win
+    cmake $BUILD_DIR/frameworks/$1 \
+        -DCMAKE_TOOLCHAIN_FILE=~/src/mxe/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+        -DBUILD_TESTING=OFF
+    make
+    make install
 }
 
-buildFramework karchive
-buildFramework kconfig
-buildFramework kcoreaddons
-buildFramework kdbusaddons
-buildFramework ki18n
-buildFramework kwidgetsaddons
-buildFramework kwindowsystem
-buildFramework kcrash
-buildFramework kservice
-buildFramework kio
-buildframework kguiaddons
-buildframework kxmlgui
-buildFramework ktextwidgets
-buildFramework kiconthemes
-buildFramework knotifications
-buildFramework knotifyconfig
-buildFramework knewstuff
+buildFramework karchive #Success
+buildFramework kconfig #Success
+buildFramework kcoreaddons #Success
+buildFramework ki18n #Success
+buildFramework kdbusaddons #Success
+buildFramework kwidgetsaddons #Success
+buildFramework kwindowsystem #Success
+buildFramework kcrash #Success
+buildFramework kservice #Success
+buildFramework kguiaddons #Success
+buildFramework kcompletion #Success
+buildFramework kauth #Success
+buildFramework kcodecs #Success
+buildFramework kguiaddons #Success
+buildFramework kconfigwidgets #Success
+buildFramework kitemviews #Success
+buildFramework kiconthemes #Success
+# buildFramework kdoctools #Failing
+# buildFramework kio #Depends on kdoctools
+# buildFramework knewstuff #Pending
+# buildFramework ktextwidgets
+# buildFramework kxmlgui #Pending----
+# buildFramework ktextwidgets #Pending
+# buildFramework kiconthemes #Pending
+# buildFramework knotifications #Pending
+# buildFramework knotifyconfig #Pending
