@@ -5,7 +5,7 @@
 #MXE_DIR is the location where mxe resides. 
 SOURCE_DIR=.
 BUILD_DIR=~/src/kdenlinve-win
-MXE_DIR=~/src/mxe
+MXE_DIR=./mxe/mxe
 cp $SOURCE_DIR/*mk $MXE_DIR -f
 cp $SOURCE_DIR/*patch $MXE_DIR -f
 #Step 1: Checkout mxe from github, if not already done
