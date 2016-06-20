@@ -3,27 +3,31 @@
 #SOURCE_DIR is the location where our custon *.mk files are stored
 #BUILD_DIR is the location where all the built files will be stored
 #MXE_DIR is the location where mxe resides. 
-SOURCE_DIR=.
+SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "Source path is $SOURCE_DIR" 
 BUILD_DIR=~/src/kdenlinve-win
-MXE_DIR=./mxe/mxe
-cp $SOURCE_DIR/*mk $MXE_DIR -f
-cp $SOURCE_DIR/*patch $MXE_DIR -f
+MXE_DIR=$SOURCE_DIR/mxe/mxe
+
 #Step 1: Checkout mxe from github, if not already done
 if [ ! -d "$MXE_DIR" ]; then
         echo "Fetching MXE sources"
-	git clone https://github.com/mxe/mxe.git $BUILD_DIR/mxe
+	git clone https://github.com/mxe/mxe.git $MXE_DIR
 	cd ..
 else
     echo "MXE folder already exists. Pulling latest changes."
     cd $MXE_DIR
     #git pull #we can enable pulling later, right not it causes many packages to rebuild if they have been changed upstream
     #Apply our patch to index.html
-    echo "Patching index.html"
-    git am *.patch
 fi
 cd $MXE_DIR
+#Apply our MXE patches
+cp $SOURCE_DIR/*.patch . -f
+git am *.patch
+#Copy our custom .mk files
+cp $SOURCE_DIR/*.mk ./src/ -f
 #Step 2: compile the needed MLT framework
 echo "Compiling MLT and its dependencies using MXE"
+
 make libxml2 libxslt qt5 qtwinextras nsis mlt
 #Step 6: clone and compile kde frameworks
 
