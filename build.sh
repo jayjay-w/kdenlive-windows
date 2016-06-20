@@ -29,7 +29,7 @@ cp $SOURCE_DIR/*.mk ./src/ -f
 echo "Compiling MLT and its dependencies using MXE"
 
 #Copy our MXE settings file to enable shared builds
-mv $SOURCE_DIR/mxe_settings ./settings.mk
+cp $SOURCE_DIR/mxe_settings ./settings.mk
 
 make libxml2 libxslt qt5 qtwinextras nsis mlt
 #Step 6: clone and compile kde frameworks
