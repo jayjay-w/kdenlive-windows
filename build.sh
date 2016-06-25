@@ -31,73 +31,46 @@ echo "Compiling MLT and its dependencies using MXE"
 #Copy our MXE settings file to enable shared builds
 cp $SOURCE_DIR/mxe_settings ./settings.mk
 
-#make libxml2 libxslt qt5 qtwinextras nsis mlt
+make libxml2 libxslt qt5 qtwinextras nsis mlt
 
-#Make docbook-xml
-cd $BUILD_DIR
-echo "Installing docbook XML"
-wget http://www.docbook.org/xml/4.5/docbook-xml-4.5.zip
-mkdir docbook-xml-4.5
-cd docbook-xml-4.5
-bsdtar xf $BUILD_DIR/docbook-xml-4.5.zip
-echo "Download complete. Extracting and copying files"
-mkdir -p $MXE_DIR/usr/share/xml/docbook-xml-dtd-4.5
-cp -dRF docbook.cat *.dtd ent/ *.mod  $MXE_DIR/usr/share/xml/docbook-xml-dtd-4.5/
-cd $BUILD_DIR
+MXE_INSTALL_PATH=$MXE_DIR/usr/i686-w64-mingw32.shared
+#make docbook-xml
+echo "Building docbook xml"
+mkdir -p $BUILD_DIR/docbook-xml
+cd $BUILD_DIR/docbook-xml
+if [ ! -f 'docbook-xml-4.5.zip' ]; then
+	wget http://www.docbook.org/xml/4.5/docbook-xml-4.5.zip
+fi
+unzip docbook-xml-4.5.zip
+install -v -d -m755 $MXE_INSTALL_PATH/share/xml/docbook/xml-dtd-4.5  &&
+install -v -d -m755 $MXE_INSTALL_PATH/etc/xml &&
+cp -v -af docbook.cat *.dtd ent/* *.mod \
+  $MXE_INSTALL_PATH/share/xml/docbook/xml-dtd-4.5
+  
+echo "Docbook xml build completed"
+#end docbook xml
+#build docbook-xsl
+echo "Building docbook xsl"
+mkdir -p $BUILD_DIR/docbook-xsl
+cd $BUILD_DIR/docbook-xsl
+DOCBOOK_XSL_VERSION=1.79.1
+if [ ! -f 'docbook-xsl-1.79.1.tar.bz2' ]; then
+	wget http://downloads.sourceforge.net/docbook/docbook-xsl-1.79.1.tar.bz2
+fi
 
-mkdir $MXE_DIR/etc/xml
-xmlcatalog --noout --create $MXE_DIR/etc/xml/docbook-xml.xml
+tar -xf docbook-xsl-1.79.1.tar.bz2 --strip-components=1
 
-# V4.5
-  xmlcatalog --noout --add "public" \
-    "-//OASIS//DTD DocBook XML V4.5//EN" \
-    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
-  xmlcatalog --noout --add "public" \
-    "-//OASIS//DTD DocBook XML CALS Table Model V4.5//EN" \
-    "file:///usr/share/xml/docbook/xml-dtd-4.5/calstblx.dtd" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
-  xmlcatalog --noout --add "public" \
-    "-//OASIS//DTD XML Exchange Table Model 19990315//EN" \
-    "file:///usr/share/xml/docbook/xml-dtd-4.5/soextblx.dtd" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
-  xmlcatalog --noout --add "public" \
-    "-//OASIS//ELEMENTS DocBook XML Information Pool V4.5//EN" \
-    "file:///usr/share/xml/docbook/xml-dtd-4.5/dbpoolx.mod" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
-  xmlcatalog --noout --add "public" \
-    "-//OASIS//ELEMENTS DocBook XML Document Hierarchy V4.5//EN" \
-    "file:///usr/share/xml/docbook/xml-dtd-4.5/dbhierx.mod" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
-  xmlcatalog --noout --add "public" \
-    "-//OASIS//ELEMENTS DocBook XML HTML Tables V4.5//EN" \
-    "file:///usr/share/xml/docbook/xml-dtd-4.5/htmltblx.mod" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
-  xmlcatalog --noout --add "public" \
-    "-//OASIS//ENTITIES DocBook XML Notations V4.5//EN" \
-    "file:///usr/share/xml/docbook/xml-dtd-4.5/dbnotnx.mod" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
-  xmlcatalog --noout --add "public" \
-    "-//OASIS//ENTITIES DocBook XML Character Entities V4.5//EN" \
-    "file:///usr/share/xml/docbook/xml-dtd-4.5/dbcentx.mod" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
-  xmlcatalog --noout --add "public" \
-    "-//OASIS//ENTITIES DocBook XML Additional General Entities V4.5//EN" \
-    "file:///usr/share/xml/docbook/xml-dtd-4.5/dbgenent.mod" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
-  xmlcatalog --noout --add "rewriteSystem" \
-    "http://www.oasis-open.org/docbook/xml/4.5" \
-    "file:///usr/share/xml/docbook/xml-dtd-4.5" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
-  xmlcatalog --noout --add "rewriteURI" \
-    "http://www.oasis-open.org/docbook/xml/4.5" \
-    "file:///usr/share/xml/docbook/xml-dtd-4.5" \
-    "$MXE_DIR/etc/xml/docbook-xml.xml"
+install -v m755 -d $MXE_INSTALL_PATH/share/xml/docbook/xsl-stylesheets-1.79.1
 
-# license
-#  install -D -m644 "${srcdir}/LICENSE" "$MXE_DIR/usr/share/licenses/${pkgname}/LICENSE"
+cp -v -R VERSION assembly common eclipse epub epub3 extensions fo \
+	highlighting html htmlhelp images javahelp lib manpages params \
+	profiling roundtrip slides template tests tools webhelp website \
+	xhtml xhtml-1_1 xhtml5 $MXE_INSTALL_PATH/share/xml/docbook/xsl-stylesheets-1.79.1 
 
-echo "Finished installing docbook-xml"
+ln -s VERSION $MXE_INSTALL_PATH/share/xml/docbook/xsl-stylesheets-1.79.1/VERSION.xsl
+
+echo "Finished building docbook xsml"
+#end docbook xsl
 
 #Step 6: clone and compile kde frameworks
 FRAMEWORK_VER_MAJOR=5.23
@@ -124,31 +97,31 @@ function buildFramework {
     make install
 }
 
-#buildFramework extra-cmake-modules
+buildFramework extra-cmake-modules
 buildFramework sonnet #Success
-#buildFramework karchive #Success
-#buildFramework kconfig #Success
-#buildFramework kcoreaddons #Success
-#buildFramework ki18n #Success
-#buildFramework kdbusaddons #Success
-#buildFramework kwidgetsaddons #Success
-#buildFramework kwindowsystem #Success
-#buildFramework kcrash #Success
-#buildFramework kservice #Success
-#buildFramework kguiaddons #Success
-#buildFramework kcompletion #Success
-#buildFramework kauth #Success
-#buildFramework kcodecs #Success
-#buildFramework kguiaddons #Success
-#buildFramework kconfigwidgets #Success
-#buildFramework kitemviews #Success
-#buildFramework kiconthemes #Success
-#buildFramework ktextwidgets #Success
-#buildFramework attica #Success
-#buildFramework kglobalaccel #Success
-#buildFramework kxmlgui #Success
-# buildFramework kdoctools #Failing
-# buildFramework kio #Depends on kdoctools
-# buildFramework knewstuff #Pending
-# buildFramework knotifications #Pending
-# buildFramework knotifyconfig #Pending
+buildFramework karchive #Success
+buildFramework kconfig #Success
+buildFramework kcoreaddons #Success
+buildFramework ki18n #Success
+buildFramework kdbusaddons #Success
+buildFramework kwidgetsaddons #Success
+buildFramework kwindowsystem #Success
+buildFramework kcrash #Success
+buildFramework kservice #Success
+buildFramework kguiaddons #Success
+buildFramework kcompletion #Success
+buildFramework kauth #Success
+buildFramework kcodecs #Success
+buildFramework kguiaddons #Success
+buildFramework kconfigwidgets #Success
+buildFramework kitemviews #Success
+buildFramework kiconthemes #Success
+buildFramework ktextwidgets #Success
+buildFramework attica #Success
+buildFramework kglobalaccel #Success
+buildFramework kxmlgui #Success
+buildFramework kdoctools #Failing
+buildFramework kio #Depends on kdoctools
+buildFramework knewstuff #Pending
+buildFramework knotifications #Pending
+buildFramework knotifyconfig #Pending
