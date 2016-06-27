@@ -7,7 +7,7 @@ SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Source path is $SOURCE_DIR" 
 BUILD_DIR=~/src/kdenlive-win
 MXE_DIR=$SOURCE_DIR/mxe/mxe
-
+REBUILD_FRAMEWORKS=OFF
 #Step 1: Checkout mxe from github, if not already done
 if [ ! -d "$MXE_DIR" ]; then
         echo "Fetching MXE sources"
@@ -29,9 +29,10 @@ cp $SOURCE_DIR/*.mk ./src/ -f
 echo "Compiling MLT and its dependencies using MXE"
 
 #Copy our MXE settings file to enable shared builds
-cp $SOURCE_DIR/mxe_settings ./settings.mk
+#cp $SOURCE_DIR/mxe_settings ./settings.mk
 
-# make libxml2 libxslt qt5 qtwinextras nsis mlt
+#make gcc
+#make libxml2 libxslt qtwinextras nsis mlt
 
 MXE_INSTALL_PATH=$MXE_DIR/usr/i686-w64-mingw32.shared
 #make docbook-xml
@@ -49,6 +50,7 @@ cp -v -af docbook.cat *.dtd ent/* *.mod \
   
 echo "Docbook xml build completed"
 #end docbook xml
+
 #build docbook-xsl
 echo "Building docbook xsl"
 mkdir -p $BUILD_DIR/docbook-xsl
@@ -69,10 +71,27 @@ cp -v -R VERSION assembly common eclipse epub epub3 extensions fo \
 
 ln -sf VERSION $MXE_INSTALL_PATH/share/xml/docbook/xsl-stylesheets/VERSION.xsl
 
-echo "Finished building docbook xsml"
+echo "Finished building docbook xsl"
 #end docbook xsl
-
+IS_ON="ON"
 #Step 6: clone and compile kde frameworks
+#Build Phonon4Qt5
+if [ $REBUILD_FRAMEWORKS = $IS_ON ]; then
+cd $BUILD_DIR
+if [ ! -d phonon ]; then
+    mkdir -p phonon
+    cd $BUILD_DIR/phonon
+    git clone https://github.com/KDE/phonon
+else
+    cd $BUILD_DIR/phonon
+    git pull
+fi
+mkdir build
+cd build
+$MXE_DIR/usr/bin/i686-w64-mingw32.shared-cmake ../phonon -DPHONON_BUILD_PHONON4QT5=ON -DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT=ON -DCMAKE_PREFIX_PATH=$MXE_DIR/usr/i686-w64-mingw32.shared/qt5
+make 
+make install
+
 FRAMEWORK_VER_MAJOR=5.23
 FRAMEWORK_VER_MINOR=0
 mkdir $BUILD_DIR/frameworks -p
@@ -97,48 +116,48 @@ function buildFramework {
     cd $BUILD_DIR/frameworks/$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR-build
     $MXE_DIR/usr/bin/i686-w64-mingw32.shared-cmake $BUILD_DIR/frameworks/$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_PREFIX_PATH=$MXE_DIR/usr/i686-w64-mingw32.shared/qt5 \
         -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
         -DBUILD_TESTING=OFF
     make
     make install
 }
 
-# buildFramework extra-cmake-modules
-# buildFramework sonnet 
-# buildFramework karchive 
-# buildFramework kconfig 
-# buildFramework kcoreaddons 
-# buildFramework ki18n 
-# buildFramework kdbusaddons 
-# buildFramework kwidgetsaddons 
-# buildFramework kwindowsystem 
-# buildFramework kcrash 
-# buildFramework kservice 
-# buildFramework kguiaddons 
-# buildFramework kcompletion 
-# buildFramework kauth 
-# buildFramework kcodecs 
-# buildFramework kguiaddons 
-# buildFramework kconfigwidgets 
-# buildFramework kitemviews 
-# buildFramework kiconthemes 
-# buildFramework ktextwidgets 
-# buildFramework attica 
-# buildFramework kglobalaccel 
-# buildFramework kxmlgui 
-# buildFramework kdoctools 
-# buildFramework solid 
-# buildFramework kbookmarks 
-# buildFramework kjobwidgets 
-# buildFramework kio 
-# buildFramework knewstuff 
-# buildFramework kfilemetadata
-# buildFramework kplotting
-# buildFramework knotifyconfig
+ buildFramework extra-cmake-modules
+ buildFramework sonnet 
+ buildFramework karchive 
+ buildFramework kconfig 
+ buildFramework kcoreaddons 
+ buildFramework ki18n 
+ buildFramework kdbusaddons 
+ buildFramework kwidgetsaddons 
+ buildFramework kwindowsystem 
+ buildFramework kcrash 
+ buildFramework kservice 
+ buildFramework kguiaddons 
+ buildFramework kcompletion 
+ buildFramework kauth 
+ buildFramework kcodecs 
+ buildFramework kguiaddons 
+ buildFramework kconfigwidgets 
+ buildFramework kitemviews 
+ buildFramework kiconthemes 
+ buildFramework ktextwidgets 
+ buildFramework attica 
+ buildFramework kglobalaccel 
+ buildFramework kxmlgui 
+buildFramework kdoctools 
+ buildFramework solid 
+ buildFramework kbookmarks 
+ buildFramework kjobwidgets 
+ buildFramework kio 
+ buildFramework knewstuff 
+ buildFramework kfilemetadata
+ buildFramework kplotting
+ buildFramework knotifyconfig
 buildFramework knotifications
-
+fi
 #Build kdenlive
-#git checkout
 cd $BUILD_DIR
 if [ ! -d "kdenlive" ]; then
     git clone git://anongit.kde.org/kdenlive $BUILD_DIR/kdenlive
