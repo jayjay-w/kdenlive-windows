@@ -29,12 +29,14 @@ cp $SOURCE_DIR/*.mk ./src/ -f
 echo "Compiling MLT and its dependencies using MXE"
 
 #Copy our MXE settings file to enable shared builds
-#cp $SOURCE_DIR/mxe_settings ./settings.mk
+cp $SOURCE_DIR/mxe_settings ./settings.mk
 
-#make gcc
-#make libxml2 libxslt qtwinextras nsis mlt
-
+make gcc
+make libxml2 libxslt qtwinextras nsis mlt
+exit
 MXE_INSTALL_PATH=$MXE_DIR/usr/i686-w64-mingw32.shared
+IS_ON="ON"
+if [ $REBUILD_FRAMEWORKS = $IS_ON ]; then
 #make docbook-xml
 echo "Building docbook xml"
 mkdir -p $BUILD_DIR/docbook-xml
@@ -73,10 +75,8 @@ ln -sf VERSION $MXE_INSTALL_PATH/share/xml/docbook/xsl-stylesheets/VERSION.xsl
 
 echo "Finished building docbook xsl"
 #end docbook xsl
-IS_ON="ON"
 #Step 6: clone and compile kde frameworks
 #Build Phonon4Qt5
-if [ $REBUILD_FRAMEWORKS = $IS_ON ]; then
 cd $BUILD_DIR
 if [ ! -d phonon ]; then
     mkdir -p phonon
@@ -114,7 +114,8 @@ function buildFramework {
     fi
     
     cd $BUILD_DIR/frameworks/$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR-build
-    $MXE_DIR/usr/bin/i686-w64-mingw32.shared-cmake $BUILD_DIR/frameworks/$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR \
+ cmake $BUILD_DIR/frameworks/$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR \
+         -DCMAKE_TOOLCHAIN_FILE=$MXE_DIR/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_PREFIX_PATH=$MXE_DIR/usr/i686-w64-mingw32.shared/qt5 \
         -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
@@ -173,8 +174,11 @@ fi
 
 cd $BUILD_DIR/kdenlive-build
 
-$MXE_DIR/usr/bin/i686-w64-mingw32.shared-cmake $BUILD_DIR/kdenlive \
+cmake $BUILD_DIR/kdenlive \
+        -DCMAKE_TOOLCHAIN_FILE=$MXE_DIR/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
-        -DBUILD_TESTING=OFF
+        -DBUILD_TESTING=OFF \
+        -DMLTPP_LIBRARIES=$MXE_DIR/usr/i686-w64-mingw32.shared/lib \
+        -DMLT_LIBRARIES=$MXE_DIR/usr/i686-w64-mingw32.shared/lib
     make
