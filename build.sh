@@ -7,7 +7,7 @@ SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Source path is $SOURCE_DIR" 
 BUILD_DIR=~/src/kdenlive-win
 MXE_DIR=$SOURCE_DIR/mxe/mxe
-REBUILD_FRAMEWORKS=OFF
+REBUILD_FRAMEWORKS=ON #Set this to off to avoid recompiling frameworks
 #Step 1: Checkout mxe from github, if not already done
 if [ ! -d "$MXE_DIR" ]; then
         echo "Fetching MXE sources"
