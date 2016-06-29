@@ -33,7 +33,7 @@ cp $SOURCE_DIR/mxe_settings ./settings.mk
 
 make gcc
 make libxml2 libxslt qtwinextras nsis mlt
-exit
+
 MXE_INSTALL_PATH=$MXE_DIR/usr/i686-w64-mingw32.shared
 IS_ON="ON"
 if [ $REBUILD_FRAMEWORKS = $IS_ON ]; then
