@@ -17,7 +17,7 @@ cd $BUILD_DIR/frameworks
 echo "Compiling KDE framework ($1)"
 #Download the code
 TAR_FILE_NAME=$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR.tar.xz
-    
+echo "Downloading the tar file"    
 if [ ! -f $TAR_FILE_NAME ]; then
     wget http://download.kde.org/stable/frameworks/$FRAMEWORK_VER_MAJOR/$TAR_FILE_NAME
 fi
@@ -30,8 +30,9 @@ if [ ! -d $BUILD_DIR/frameworks/$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR-bui
     mkdir -p $BUILD_DIR/frameworks/$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR-build
 fi
     
+echo "Compiling the code"
 cd $BUILD_DIR/frameworks/$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR-build
-cmake $BUILD_DIR/frameworks/$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR \
+$MXE_DIR/usr/bin/i686-w64-mingw32.shared-cmake $BUILD_DIR/frameworks/$1-$FRAMEWORK_VER_MAJOR.$FRAMEWORK_VER_MINOR \
     -DCMAKE_TOOLCHAIN_FILE=$MXE_DIR/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_PREFIX_PATH=$MXE_DIR/usr/i686-w64-mingw32.shared/qt5 \
