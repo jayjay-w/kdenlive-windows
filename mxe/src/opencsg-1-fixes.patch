@@ -1,0 +1,47 @@
+This file is part of MXE.
+See index.html for further information.
+
+Contains ad hoc patches for cross building.
+
+diff -ur OpenCSG-1.4.0.orig/example/example.pro OpenCSG-1.4.0/example/example.pro
+--- OpenCSG-1.4.0.orig/example/example.pro	2014-09-15 22:25:33.000000000 +0200
++++ OpenCSG-1.4.0/example/example.pro	2015-03-22 14:08:27.706916987 +0100
+@@ -1,10 +1,10 @@
+ TEMPLATE = app
+ TARGET = opencsgexample
+ 
+-CONFIG += opengl warn_on release
++CONFIG += opengl warn_on release link_pkgconfig
+ CONFIG -= qt
+ INCLUDEPATH += ../include
+-LIBS += -L../lib -lopencsg -lGLEW
++LIBS += -L../lib -lopencsg
+ 
+ INSTALLDIR = /usr/local
+ INSTALLS += target
+@@ -15,7 +15,8 @@
+   LIBS += -framework GLUT -L/opt/local/lib
+ }
+ else {
+-  LIBS += -lGLU -lglut
++  LIBS += -lglut
++  PKGCONFIG += glew glut
+ }
+ 
+ HEADERS = displaylistPrimitive.h
+diff -ur OpenCSG-1.4.0.orig/src/src.pro OpenCSG-1.4.0/src/src.pro
+--- OpenCSG-1.4.0.orig/src/src.pro	2014-09-15 22:25:33.000000000 +0200
++++ OpenCSG-1.4.0/src/src.pro	2015-03-22 14:05:18.275029066 +0100
+@@ -2,10 +2,10 @@
+ TARGET = opencsg
+ VERSION = 1.4.0
+ 
+-CONFIG += opengl warn_on release
++CONFIG += opengl warn_on release link_pkgconfig
+ INCLUDEPATH += ../include ../
+ CONFIG -= qt
+-LIBS += -lGLEW
++PKGCONFIG += glew glut
+ 
+ DESTDIR = ../lib
+ INSTALLDIR = /usr/local
