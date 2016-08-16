@@ -957,18 +957,6 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <a href="#issue-non-multilib">known issues</a>
         </dd>
 
-    <dt>make foo_SOURCE_TREE=/path/to/local/source</dt>
-
-        <dd>
-        build using local source tree for package "foo", bypassing
-        download, checksum and patching
-        </dd>
-        <dd>
-        <strong>N.B.</strong> ensure "foo" has an out-of-source
-        build configured to avoid generation of build artefacts
-        in local tree
-        </dd>
-
     <dt>make check-requirements</dt>
 
         <dd>
@@ -1150,8 +1138,20 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.gtkmm.org/">ATKmm</a></td>
     </tr>
     <tr>
+        <td class="package">attica</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/attica/html/">attica</a></td>
+    </tr>
+    <tr>
         <td class="package">aubio</td>
         <td class="website"><a href="http://www.aubio.org/">aubio</a></td>
+    </tr>
+    <tr>
+        <td class="package">breeze-icons</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/breeze-icons/html/">breeze-icons</a></td>
+    </tr>
+    <tr>
+        <td class="package">db</td>
+        <td class="website"><a href="http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html">Oracle Berkeley DB</a></td>
     </tr>
     <tr>
         <td class="package">bfd</td>
@@ -1222,12 +1222,12 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://acoustid.org/chromaprint">Chromaprint</a></td>
     </tr>
     <tr>
-        <td class="package">cimg</td>
-        <td class="website"><a href="http://cimg.eu/">CImg Library</a></td>
-    </tr>
-    <tr>
         <td class="package">cloog</td>
         <td class="website"><a href="http://www.cloog.org/">CLooG Code Generator</a></td>
+    </tr>
+    <tr>
+        <td class="package">cimg</td>
+        <td class="website"><a href="http://cimg.eu/">CImg Library</a></td>
     </tr>
     <tr>
         <td class="package">cmake</td>
@@ -1270,10 +1270,6 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://curl.haxx.se/libcurl/">cURL</a></td>
     </tr>
     <tr>
-        <td class="package">db</td>
-        <td class="website"><a href="http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html">Oracle Berkeley DB</a></td>
-    </tr>
-    <tr>
         <td class="package">dbus</td>
         <td class="website"><a href="http://dbus.freedesktop.org/">dbus</a></td>
     </tr>
@@ -1286,12 +1282,16 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://openil.sourceforge.net/">DevIL</a></td>
     </tr>
     <tr>
-        <td class="package">djvulibre</td>
-        <td class="website"><a href="http://djvu.sourceforge.net/">DjVuLibre</a></td>
-    </tr>
-    <tr>
         <td class="package">dlfcn-win32</td>
         <td class="website"><a href="https://code.google.com/p/dlfcn-win32/">POSIX dlfcn wrapper for Windows</a></td>
+    </tr>
+    <tr>
+        <td class="package">docbook-xml</td>
+        <td class="website"><a href="http://docbook.org/">DocBook DTD</a></td>
+    </tr>
+    <tr>
+        <td class="package">docbook-xsl</td>
+        <td class="website"><a href="http://docbook.org/">DocBook XSL Stylesheets</a></td>
     </tr>
     <tr>
         <td class="package">eigen</td>
@@ -1304,6 +1304,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">expat</td>
         <td class="website"><a href="http://expat.sourceforge.net/">Expat XML Parser</a></td>
+    </tr>
+    <tr>
+        <td class="package">extra-cmake-modules</td>
+        <td class="website"><a href="https://api.kde.org/ecm/manual/ecm.7.html">KDE Extra CMake Modules</a></td>
     </tr>
     <tr>
         <td class="package">faad2</td>
@@ -1362,6 +1366,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.freetype.org/">freetype (without harfbuzz)</a></td>
     </tr>
     <tr>
+        <td class="package">frei0r-plugins</td>
+        <td class="website"><a href="http://frei0r.dyne.org/">frie0r video effects</a></td>
+    </tr>
+    <tr>
         <td class="package">fribidi</td>
         <td class="website"><a href="http://fribidi.org/">FriBidi</a></td>
     </tr>
@@ -1408,10 +1416,6 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">gettext</td>
         <td class="website"><a href="https://www.gnu.org/software/gettext/">gettext</a></td>
-    </tr>
-    <tr>
-        <td class="package">ghostscript</td>
-        <td class="website"><a href="http://www.ghostscript.com/">ghostscript</a></td>
     </tr>
     <tr>
         <td class="package">giflib</td>
@@ -1612,6 +1616,130 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">jsoncpp</td>
         <td class="website"><a href="https://github.com/open-source-parsers/jsoncpp">jsoncpp</a></td>
+    </tr>
+    <tr>
+        <td class="package">karchive</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/karchive/html/">karchive</a></td>
+    </tr>
+    <tr>
+        <td class="package">kauth</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kauth/html/">kauth</a></td>
+    </tr>
+    <tr>
+        <td class="package">kbookmarks</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kbookmarks/html/">kbookmarks</a></td>
+    </tr>
+    <tr>
+        <td class="package">kcodecs</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kcodecs/html/">kcodecs</a></td>
+    </tr>
+    <tr>
+        <td class="package">kcompletion</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kcompletion/html/">kcompletion</a></td>
+    </tr>
+    <tr>
+        <td class="package">kconfig</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kconfig/html/">kconfig</a></td>
+    </tr>
+    <tr>
+        <td class="package">kconfigwidgets</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kconfigwidgets/html/">kconfigwidgets</a></td>
+    </tr>
+    <tr>
+        <td class="package">kcoreaddons</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kcoreaddons/html/">kcoreaddons</a></td>
+    </tr>
+    <tr>
+        <td class="package">kcrash</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kcrash/html/">kcrash</a></td>
+    </tr>
+    <tr>
+        <td class="package">kdbusaddons</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kdbusaddons/html/">kdbusaddons</a></td>
+    </tr>
+    <tr>
+        <td class="package">kdenlive</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kdenlive/html/">kdenlive</a></td>
+    </tr>
+    <tr>
+        <td class="package">kdoctools</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kdoctools/html/">kdoctools</a></td>
+    </tr>
+    <tr>
+        <td class="package">kfilemetadata</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kfilemetadata/html/">kfilemetadata</a></td>
+    </tr>
+    <tr>
+        <td class="package">kglobalaccel</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kglobalaccel/html/">kglobalaccel</a></td>
+    </tr>
+    <tr>
+        <td class="package">kguiaddons</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kguiaddons/html/">kguiaddons</a></td>
+    </tr>
+    <tr>
+        <td class="package">ki18n</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/ki18n/html/">ki18n</a></td>
+    </tr>
+    <tr>
+        <td class="package">kiconthemes</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kiconthemes/html/">kiconthemes</a></td>
+    </tr>
+    <tr>
+        <td class="package">kio</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kio/html/">kio</a></td>
+    </tr>
+    <tr>
+        <td class="package">kitemviews</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kitemviews/html/">kitemviews</a></td>
+    </tr>
+    <tr>
+        <td class="package">kjobwidgets</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kjobwidgets/html/">kjobwidgets</a></td>
+    </tr>
+    <tr>
+        <td class="package">knotifications</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/knotifications/html/">knotifications</a></td>
+    </tr>
+    <tr>
+        <td class="package">knotifyconfig</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/knotifyconfig/html/">knotifyconfig</a></td>
+    </tr>
+    <tr>
+        <td class="package">knewstuff</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/knewstuff/html/">knewstuff</a></td>
+    </tr>
+    <tr>
+        <td class="package">kplotting</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kplotting/html/">kplotting</a></td>
+    </tr>
+    <tr>
+        <td class="package">kservice</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kservice/html/">kservice</a></td>
+    </tr>
+    <tr>
+        <td class="package">ktextwidgets</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/ktextwidgets/html/">ktextwidgets</a></td>
+    </tr>
+    <tr>
+        <td class="package">kwallet</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kwallet/html/">kwallet</a></td>
+    </tr>
+    <tr>
+        <td class="package">kwidgetsaddons</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kwidgetsaddons/html/">kwidgetsaddons</a></td>
+    </tr>
+    <tr>
+        <td class="package">kwindowsystem</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kwindowsystem/html/">kwindowsystem</a></td>
+    </tr>
+    <tr>
+        <td class="package">kxmlgui</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/kxmlgui/html/">kxmlgui</a></td>
+    </tr>
+    <tr>
+        <td class="package">ladspa-sdk</td>
+        <td class="website"><a href="http://ladspa.org/">ladspa audio plugins</a></td>
     </tr>
     <tr>
         <td class="package">lame</td>
@@ -1886,12 +2014,12 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.libpng.org/">libpng</a></td>
     </tr>
     <tr>
-        <td class="package">librosco</td>
-        <td class="website"><a href="https://github.com/colinbourassa/librosco/">librosco</a></td>
-    </tr>
-    <tr>
         <td class="package">librsvg</td>
         <td class="website"><a href="http://librsvg.sourceforge.net/">librsvg</a></td>
+    </tr>
+    <tr>
+        <td class="package">librosco</td>
+        <td class="website"><a href="https://github.com/colinbourassa/librosco/">librosco</a></td>
     </tr>
     <tr>
         <td class="package">librtmp</td>
@@ -1920,10 +2048,6 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">libsoup</td>
         <td class="website"><a href="https://github.com/GNOME/libsoup">libsoup</a></td>
-    </tr>
-    <tr>
-        <td class="package">libspectre</td>
-        <td class="website"><a href="https://libspectre.freedesktop.org">libspectre</a></td>
     </tr>
     <tr>
         <td class="package">libssh2</td>
@@ -2022,16 +2146,20 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://sourceforge.net/projects/mdbtools/">mdbtools</a></td>
     </tr>
     <tr>
-        <td class="package">mingw-w64</td>
-        <td class="website"><a href="http://mingw-w64.sourceforge.net/">MinGW-w64 Runtime</a></td>
-    </tr>
-    <tr>
         <td class="package">miniupnpc</td>
         <td class="website"><a href="http://miniupnp.free.fr/">miniupnpc</a></td>
     </tr>
     <tr>
         <td class="package">minizip</td>
         <td class="website"><a href="http://www.winimage.com/zLibDll/minizip.html">minizip</a></td>
+    </tr>
+    <tr>
+        <td class="package">mingw-w64</td>
+        <td class="website"><a href="http://mingw-w64.sourceforge.net/">MinGW-w64 Runtime</a></td>
+    </tr>
+    <tr>
+        <td class="package">mlt</td>
+        <td class="website"><a href="https://www.mltframework.org/">MLT Multimedia Framework</a></td>
     </tr>
     <tr>
         <td class="package">mman-win32</td>
@@ -2174,7 +2302,7 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="https://www.openssl.org/">openssl</a></td>
     </tr>
     <tr>
-        <td class="package">openthreads</td>
+      <td class="package">openthreads</td>
         <td class="website"><a href="http://www.openscenegraph.org/">OpenThreads</a></td>
     </tr>
     <tr>
@@ -2216,6 +2344,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">pfstools</td>
         <td class="website"><a href="http://pfstools.sourceforge.net/">pfstools</a></td>
+    </tr>
+    <tr>
+        <td class="package">phonon</td>
+        <td class="website"><a href="https://api.kde.org/phonon/html/">phonon</a></td>
     </tr>
     <tr>
         <td class="package">physfs</td>
@@ -2398,11 +2530,11 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://qt-project.org/">Qt</a></td>
     </tr>
     <tr>
-        <td class="package">qtscript</td>
+        <td class="package">qtscxml</td>
         <td class="website"><a href="http://qt-project.org/">Qt</a></td>
     </tr>
     <tr>
-        <td class="package">qtscxml</td>
+        <td class="package">qtscript</td>
         <td class="website"><a href="http://qt-project.org/">Qt</a></td>
     </tr>
     <tr>
@@ -2510,30 +2642,6 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.libsdl.org/">SDL</a></td>
     </tr>
     <tr>
-        <td class="package">sdl2</td>
-        <td class="website"><a href="http://www.libsdl.org/">SDL2</a></td>
-    </tr>
-    <tr>
-        <td class="package">sdl2_gfx</td>
-        <td class="website"><a href="http://www.ferzkopp.net/joomla/content/view/19/14/">SDL2_gfx</a></td>
-    </tr>
-    <tr>
-        <td class="package">sdl2_image</td>
-        <td class="website"><a href="http://www.libsdl.org/">SDL2_image</a></td>
-    </tr>
-    <tr>
-        <td class="package">sdl2_mixer</td>
-        <td class="website"><a href="http://www.libsdl.org/">SDL2_mixer</a></td>
-    </tr>
-    <tr>
-        <td class="package">sdl2_net</td>
-        <td class="website"><a href="http://www.libsdl.org/">sdl2_net</a></td>
-    </tr>
-    <tr>
-        <td class="package">sdl2_ttf</td>
-        <td class="website"><a href="http://www.libsdl.org/">SDL2_ttf</a></td>
-    </tr>
-    <tr>
         <td class="package">sdl_gfx</td>
         <td class="website"><a href="http://www.ferzkopp.net/joomla/content/view/19/14/">SDL_gfx</a></td>
     </tr>
@@ -2566,6 +2674,30 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.libsdl.org/projects/SDL_ttf/">SDL_ttf</a></td>
     </tr>
     <tr>
+        <td class="package">sdl2</td>
+        <td class="website"><a href="http://www.libsdl.org/">SDL2</a></td>
+    </tr>
+    <tr>
+        <td class="package">sdl2_gfx</td>
+        <td class="website"><a href="http://www.ferzkopp.net/joomla/content/view/19/14/">SDL2_gfx</a></td>
+    </tr>
+    <tr>
+        <td class="package">sdl2_image</td>
+        <td class="website"><a href="http://www.libsdl.org/">SDL2_image</a></td>
+    </tr>
+    <tr>
+        <td class="package">sdl2_mixer</td>
+        <td class="website"><a href="http://www.libsdl.org/">SDL2_mixer</a></td>
+    </tr>
+    <tr>
+        <td class="package">sdl2_net</td>
+        <td class="website"><a href="http://www.libsdl.org/">sdl2_net</a></td>
+    </tr>
+    <tr>
+        <td class="package">sdl2_ttf</td>
+        <td class="website"><a href="http://www.libsdl.org/">SDL2_ttf</a></td>
+    </tr>
+    <tr>
         <td class="package">sfml</td>
         <td class="website"><a href="http://www.sfml-dev.org/">SFML</a></td>
     </tr>
@@ -2576,6 +2708,14 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">smpeg2</td>
         <td class="website"><a href="http://icculus.org/smpeg/">smpeg</a></td>
+    </tr>
+    <tr>
+        <td class="package">solid</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/solid/html/">solid</a></td>
+    </tr>
+    <tr>
+        <td class="package">sonnet</td>
+        <td class="website"><a href="https://api.kde.org/frameworks/sonnet/html/">sonnet</a></td>
     </tr>
     <tr>
         <td class="package">sox</td>
@@ -2598,12 +2738,12 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.sqlite.org/">SQLite</a></td>
     </tr>
     <tr>
-        <td class="package">subversion</td>
-        <td class="website"><a href="http://subversion.apache.org">subversion</a></td>
-    </tr>
-    <tr>
         <td class="package">suitesparse</td>
         <td class="website"><a href="http://www.cise.ufl.edu/research/sparse/SuiteSparse/">SuiteSparse</a></td>
+    </tr>
+    <tr>
+        <td class="package">subversion</td>
+        <td class="website"><a href="http://subversion.apache.org">subversion</a></td>
     </tr>
     <tr>
         <td class="package">t4k_common</td>
@@ -2758,16 +2898,8 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <td class="website"><a href="http://www.xvid.org/">xvidcore</a></td>
     </tr>
     <tr>
-        <td class="package">xxhash</td>
-        <td class="website"><a href="http://cyan4973.github.io/xxHash/">xxHash</a></td>
-    </tr>
-    <tr>
         <td class="package">xz</td>
         <td class="website"><a href="http://tukaani.org/xz/">XZ</a></td>
-    </tr>
-    <tr>
-        <td class="package">yaml-cpp</td>
-        <td class="website"><a href="https://github.com/jbeder/yaml-cpp">A YAML parser and emitter for C++</a></td>
     </tr>
     <tr>
         <td class="package">yasm</td>
@@ -2780,6 +2912,10 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
     <tr>
         <td class="package">zziplib</td>
         <td class="website"><a href="http://zziplib.sourceforge.net/">ZZIPlib</a></td>
+    </tr>
+    <tr>
+        <td class="package">xxhash</td>
+        <td class="website"><a href="http://cyan4973.github.io/xxHash/">xxHash</a></td>
     </tr>
     </table>
 
@@ -2940,15 +3076,6 @@ local-pkg-list: $(LOCAL_PKG_LIST)</pre>
         <p>
         The <a href="doc/gmsl.html">GNU Make Standard Library</a> is also
         available (though it should be unnecessary for most packages).
-        </p>
-
-        <p>
-        Alternatively you can use tool <code>tools/skeleton.py</code> to
-        create a skeleton of new MXE package. It fills most of the fields
-        of <code>.mk</code> file automatically and supports typical
-        build scenarios through option <code>--builder</code>. It also
-        adds a package to the <a href="#packages">list of packages</a>
-        (see below).
         </p>
     </li>
 

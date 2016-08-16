@@ -1,0 +1,29 @@
+From c3d2ddc25f1f6929dcd426580d00e654e8eaaa65 Mon Sep 17 00:00:00 2001
+From: Vincent Pinon <vpinon@kde.org>
+Date: Tue, 26 Jul 2016 00:27:33 +0200
+Subject: [PATCH] fix implib generation
+
+---
+ Makefile | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 4d11de8..268f1f5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -30,9 +30,11 @@ libdl.a: $(LIB_OBJS)
+ 	$(AR) cru $@ $^
+ 	$(RANLIB) libdl.a
+ 
+-libdl.dll libdl.dll.a: $(LIB_OBJS)
++libdl.dll: $(LIB_OBJS)
+ 	$(CC) $(SHFLAGS) -shared -o $@ $^
+ 
++libdl.dll.a: libdl.dll
++
+ libdl.lib: libdl.dll
+ 	$(LIBCMD) /machine:i386 /def:libdl.def
+ 
+-- 
+2.8.1
+

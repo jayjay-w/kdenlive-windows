@@ -33,7 +33,7 @@ define $(PKG)_BUILD
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -std=c99 -pedantic -Wno-error=unused-parameter \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-libmicrohttpd.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-libmicrohttpd.exe' \
         `'$(TARGET)-pkg-config' --cflags --libs libmicrohttpd`
 endef
 

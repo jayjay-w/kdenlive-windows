@@ -30,6 +30,6 @@ define $(PKG)_BUILD
 
     '$(TARGET)-g++' \
         -W -Wall -Werror -pedantic -ansi \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-fltk.exe' \
+        '$(2).cpp' -o '$(PREFIX)/$(TARGET)/bin/test-fltk.exe' \
         `$(TARGET)-fltk-config --cxxflags --ld$(if $(BUILD_STATIC),static)flags`
 endef

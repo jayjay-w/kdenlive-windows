@@ -31,7 +31,7 @@ define $(PKG)_BUILD
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -ansi -pedantic \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-mxml.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-mxml.exe' \
         `'$(TARGET)-pkg-config' mxml --cflags --libs`
 endef
 

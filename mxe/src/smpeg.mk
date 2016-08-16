@@ -34,7 +34,7 @@ define $(PKG)_BUILD
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -std=c99 -pedantic \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-smpeg.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-smpeg.exe' \
         `'$(PREFIX)/$(TARGET)/bin/smpeg-config' --cflags --libs`
 endef
 

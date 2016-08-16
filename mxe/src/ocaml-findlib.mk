@@ -52,7 +52,7 @@ define $(PKG)_BUILD
     # test
     '$(TARGET)-ocamlfind' opt \
         -o '$(PREFIX)/$(TARGET)/bin/test-$(PKG).exe' \
-        < '$(TEST_FILE)'
+        < '$(2).ml'
 
 endef
 

@@ -27,6 +27,6 @@ define $(PKG)_BUILD
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -std=c99 -pedantic \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-libmikmod.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-libmikmod.exe' \
         `'$(PREFIX)/$(TARGET)/bin/libmikmod-config' --cflags --libs`
 endef

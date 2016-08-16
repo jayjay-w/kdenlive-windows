@@ -26,6 +26,6 @@ define $(PKG)_BUILD
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -ansi -pedantic \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-geos.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-geos.exe' \
         `'$(PREFIX)/bin/$(TARGET)-geos-config' --cflags --clibs`
 endef

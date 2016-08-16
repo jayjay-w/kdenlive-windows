@@ -60,11 +60,11 @@ define $(PKG)_BUILD
     '$(TARGET)-gcc' \
         -W -Wall -Werror -ansi -pedantic \
         `'$(TARGET)-pkg-config' glew --cflags` \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-glew.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-glew.exe' \
         `'$(TARGET)-pkg-config' glew --libs`
     '$(TARGET)-gcc' \
         -W -Wall -Werror -ansi -pedantic \
         `'$(TARGET)-pkg-config' glewmx --cflags` \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-glewmx.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-glewmx.exe' \
         `'$(TARGET)-pkg-config' glewmx --libs`
 endef

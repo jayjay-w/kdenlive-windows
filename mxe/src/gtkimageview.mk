@@ -38,7 +38,7 @@ define $(PKG)_BUILD
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -ansi \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-gtkimageview.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-gtkimageview.exe' \
         `'$(TARGET)-pkg-config' gtkimageview --cflags --libs`
 endef
 

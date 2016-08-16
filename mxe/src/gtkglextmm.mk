@@ -32,7 +32,7 @@ define $(PKG)_BUILD
 
     '$(TARGET)-g++' \
         -W -Wall -Werror -pedantic -std=c++0x \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-gtkglextmm.exe' \
+        '$(2).cpp' -o '$(PREFIX)/$(TARGET)/bin/test-gtkglextmm.exe' \
         `'$(TARGET)-pkg-config' gtkglextmm-1.2 --cflags --libs`
 endef
 

@@ -461,7 +461,7 @@ local function gitCheckout(new_branch, deps, item2index, pass_of_deps)
 end
 
 local function gitAdd()
-    os.execute(GIT .. 'add --all --force .')
+    os.execute(GIT .. 'add --all .')
 end
 
 -- return two lists of filepaths under ./usr/
@@ -644,13 +644,10 @@ local function comparePasses(item, new_files, prev_file2item, prev_files)
         end
         files_set[file] = true
     end
-    if prev_files then
-        -- prev_files is nil, if the first pass failed
-        for _, file in ipairs(prev_files) do
-            if not files_set[file] then
-                log('Item %s installs a file on first pass only: %s',
-                    item, file)
-            end
+    for _, file in ipairs(prev_files) do
+        if not files_set[file] then
+            log('Item %s installs a file on first pass only: %s',
+                item, file)
         end
     end
     -- TODO compare contents of files (nm for binaries)

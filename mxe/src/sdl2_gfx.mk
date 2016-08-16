@@ -27,6 +27,6 @@ define $(PKG)_BUILD
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -ansi -pedantic \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-sdl2_gfx.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-sdl2_gfx.exe' \
         `'$(TARGET)-pkg-config' SDL2_gfx --cflags --libs`
 endef

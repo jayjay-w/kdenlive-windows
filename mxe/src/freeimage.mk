@@ -56,12 +56,12 @@ define $(PKG)_BUILD
 
     '$(TARGET)-gcc' \
         -W -Wall -Werror -ansi -pedantic \
-        '$(PWD)/src/$(PKG)-test.c' -o '$(PREFIX)/$(TARGET)/bin/test-freeimage.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-freeimage.exe' \
         `'$(TARGET)-pkg-config' freeimage --cflags --libs`
 
     '$(TARGET)-g++' \
         -W -Wall -Werror -ansi -pedantic \
-        '$(PWD)/src/$(PKG)-test.cpp' -o '$(PREFIX)/$(TARGET)/bin/test-freeimageplus.exe' \
+        '$(2).cpp' -o '$(PREFIX)/$(TARGET)/bin/test-freeimageplus.exe' \
         `'$(TARGET)-pkg-config' freeimageplus --cflags --libs`
 endef
 

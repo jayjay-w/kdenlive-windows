@@ -23,6 +23,6 @@ define $(PKG)_BUILD
 
     '$(TARGET)-g++' \
         -W -Wall -Werror -ansi -pedantic \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-glm.exe'
+        '$(2).cpp' -o '$(PREFIX)/$(TARGET)/bin/test-glm.exe'
 endef
 

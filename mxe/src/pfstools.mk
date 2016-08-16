@@ -38,7 +38,7 @@ define $(PKG)_BUILD
 
     '$(TARGET)-g++' \
         -Wall -Wextra -Werror \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-pfstools.exe' \
+        '$(2).cpp' -o '$(PREFIX)/$(TARGET)/bin/test-pfstools.exe' \
         `'$(TARGET)-pkg-config' pfs --cflags --libs`
 endef
 

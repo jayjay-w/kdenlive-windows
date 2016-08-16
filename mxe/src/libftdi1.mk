@@ -32,6 +32,6 @@ define $(PKG)_BUILD
 
     '$(TARGET)-gcc' \
         -W -Wall -Wextra -Werror \
-        '$(TEST_FILE)' -o '$(PREFIX)/$(TARGET)/bin/test-libftdi1.exe' \
+        '$(2).c' -o '$(PREFIX)/$(TARGET)/bin/test-libftdi1.exe' \
         `'$(TARGET)-pkg-config' libftdi1 --cflags --libs`
 endef
