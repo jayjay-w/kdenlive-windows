@@ -1,0 +1,28 @@
+This file is part of MXE.
+See index.html for further information.
+
+From fcefd23867bc36b89ed5a0f924c9bb017a86946e Mon Sep 17 00:00:00 2001
+From: Vincent Pinon <vpinon@kde.org>
+Date: Tue, 19 Jul 2016 16:50:15 +0200
+Subject: [PATCH 1/2] unavailable type
+
+---
+ src/dialogs/renderwidget.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/dialogs/renderwidget.cpp b/src/dialogs/renderwidget.cpp
+index c9d2653..4ac91f3 100644
+--- a/src/dialogs/renderwidget.cpp
++++ b/src/dialogs/renderwidget.cpp
+@@ -2025,7 +2025,7 @@ void RenderWidget::setRenderJob(const QString &dest, int progress)
+         QDateTime startTime = item->data(1, TimeRole).toDateTime();
+         int days = startTime.daysTo (QDateTime::currentDateTime()) ;
+         double elapsedTime = days * 86400 + startTime.addDays(days).secsTo( QDateTime::currentDateTime() );
+-        u_int32_t remaining = elapsedTime * (100.0 - progress) / progress;
++        quint32 remaining = elapsedTime * (100.0 - progress) / progress;
+         int remainingSecs = remaining % 86400;
+         days = remaining / 86400;
+         QTime when = QTime ( 0, 0, 0, 0 ) ;
+-- 
+2.7.4
+

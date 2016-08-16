@@ -1,0 +1,40 @@
+This file is part of MXE.
+See index.html for further information.
+
+From 488d54552ad34ce025b15abcf5325048c336aa1c Mon Sep 17 00:00:00 2001
+From: Vincent Pinon <vpinon@kde.org>
+Date: Tue, 19 Jul 2016 16:50:37 +0200
+Subject: [PATCH 2/2] make kdoctools optional
+
+---
+ CMakeLists.txt | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 24a34aa..91c8842 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -76,7 +76,8 @@ find_package(Qt5 REQUIRED COMPONENTS Core DBus Widgets Script Svg Quick )
+ find_package(Qt5 OPTIONAL_COMPONENTS WebKitWidgets QUIET)
+ 
+ find_package(KF5 REQUIRED COMPONENTS Archive Bookmarks CoreAddons Config ConfigWidgets 
+-                            DBusAddons KIO WidgetsAddons Plotting NotifyConfig NewStuff XmlGui Notifications GuiAddons TextWidgets IconThemes DocTools Crash OPTIONAL_COMPONENTS FileMetaData)
++                            DBusAddons KIO WidgetsAddons Plotting NotifyConfig NewStuff XmlGui Notifications GuiAddons TextWidgets IconThemes Crash
++                            OPTIONAL_COMPONENTS DocTools FileMetaData)
+ 
+ if (KF5FileMetaData_FOUND)
+   message(STATUS "Found KF5 FileMetadata to extract file metadata")
+@@ -96,7 +97,9 @@ set_package_properties(MLT PROPERTIES
+ set(MLT_PREFIX ${MLT_ROOT_DIR})
+ 
+ add_subdirectory(data)
+-add_subdirectory(doc)
++if(KDOCTOOLS_FOUND)
++    add_subdirectory(doc)
++endif()
+ #add_subdirectory(plugins)
+ ecm_optional_add_subdirectory(po)
+ add_subdirectory(renderer)
+-- 
+2.7.4
+
