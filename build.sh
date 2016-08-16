@@ -15,3 +15,4 @@ cp -r lib/ladspa $INSTALL_DIR/lib
 cp lib/libdl.dll.a $INSTALL_DIR/
 
 #makensis
+../makensis .
